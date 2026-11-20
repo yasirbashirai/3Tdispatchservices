@@ -1,0 +1,450 @@
+<!--META
+{
+  "title": "Carrier Signup & Onboarding | 3T Dispatch Services",
+  "description": "Apply to be dispatched by 3T Dispatch Services. Upload your MC authority, certificate of insurance, and W-9, review requirements, and sign the dispatch agreement electronically in one five-minute carrier application.",
+  "path": "carriers.html",
+  "nav": "carriers",
+  "cta": false,
+  "ogImage": "assets/img/hero-dryvan.jpg",
+  "schema": {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "WebPage",
+        "name": "Carrier signup and onboarding",
+        "url": "https://www.3tdispatchservices.com/carriers.html",
+        "description": "Carrier requirements and onboarding for 3T Dispatch Services. Upload documents and sign electronically."
+      },
+      {
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+          {"@type": "ListItem", "position": 1, "name": "Home", "item": "https://www.3tdispatchservices.com/"},
+          {"@type": "ListItem", "position": 2, "name": "Carrier signup", "item": "https://www.3tdispatchservices.com/carriers.html"}
+        ]
+      },
+      {
+        "@type": "FAQPage",
+        "mainEntity": [
+          {"@type": "Question", "name": "Do I need my own MC authority to be dispatched?", "acceptedAnswer": {"@type": "Answer", "text": "Yes. You must hold active MC and DOT authority and carry active insurance. We do not dispatch company drivers or trucks operating under someone else's authority."}},
+          {"@type": "Question", "name": "What if my MC authority is newer than one year?", "acceptedAnswer": {"@type": "Answer", "text": "We prefer at least one year of aged MC authority, but newer authorities are reviewed case by case based on equipment, insurance, safety profile, and the lanes available."}},
+          {"@type": "Question", "name": "How long does carrier onboarding take?", "acceptedAnswer": {"@type": "Answer", "text": "Most of the work happens in one call. Once your authority, insurance, W-9, and signed agreement are on file, we build your lane plan and begin sourcing freight."}},
+          {"@type": "Question", "name": "Do I have to be exclusive to 3T Dispatch Services?", "acceptedAnswer": {"@type": "Answer", "text": "No. You keep your authority and your business. We ask for clear communication about availability so we do not book you against freight you cannot cover."}}
+        ]
+      }
+    ]
+  }
+}
+-->
+<section class="page-hero" style="padding-block:clamp(2.25rem,4.5vw,3.5rem)">
+  <div class="container">
+    <nav class="breadcrumbs" aria-label="Breadcrumb">
+      <a href="index.html">Home</a><span aria-hidden="true">/</span><span aria-current="page">Carrier signup</span>
+    </nav>
+    <div class="page-hero__grid">
+      <div>
+        <p class="eyebrow">Carrier signup</p>
+        <h1>Let's get your truck on the board.</h1>
+        <p>Four short steps: your operation, your authority, your documents, and your signature. About five minutes. A dispatcher reviews everything before you are dispatched.</p>
+        <div class="hero__actions" style="margin-top:1.75rem;margin-bottom:0">
+          <a class="btn btn--lg" href="#application">Start the application
+            <svg class="icon" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M4 10h11M11 5l5 5-5 5"/></svg>
+          </a>
+          <a class="btn btn--lg btn--outline-light" href="index.html#contact">Talk to a dispatcher first</a>
+        </div>
+      </div>
+      <div class="page-hero__aside">
+        <strong>Have these ready</strong>
+        MC and DOT numbers<br>
+        Certificate of insurance<br>
+        Completed W-9<br>
+        A phone number we can reach you on
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section section--surface section--tight" aria-labelledby="carrier-req-title">
+  <div class="container">
+    <div class="section-head" style="margin-bottom:2rem">
+      <div class="reveal">
+        <p class="eyebrow">Before you apply</p>
+        <h2 id="carrier-req-title">What it takes to get on the board.</h2>
+      </div>
+      <p class="lead reveal reveal-delay-1">We keep the bar clear because brokers and shippers hold us to it. Every requirement protects your rate and your delivery record as much as ours.</p>
+    </div>
+    <div class="require-grid">
+      <div class="require reveal">
+        <span class="require__num">01</span>
+        <h3>Active MC and DOT authority</h3>
+        <p>You operate under your own authority. We verify status before any load is offered.</p>
+      </div>
+      <div class="require reveal reveal-delay-1">
+        <span class="require__num">02</span>
+        <h3>Active insurance</h3>
+        <p>Auto liability and cargo coverage on file, with the certificate naming the correct insured entity.</p>
+      </div>
+      <div class="require reveal reveal-delay-2">
+        <span class="require__num">03</span>
+        <h3>One year of authority preferred</h3>
+        <p>Aged MC authority helps with broker setup. Newer authorities are reviewed case by case.</p>
+      </div>
+      <div class="require reveal reveal-delay-3">
+        <span class="require__num">04</span>
+        <h3>Equipment that fits the freight</h3>
+        <p>53' dry van, 53' reefer, or 48'/53' flatbed. Trailers must be road-ready and correctly spec'd.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="application" style="padding-block:clamp(2.5rem,5vw,4.5rem)">
+  <div class="container">
+    <div class="apply-layout">
+      <div>
+        <form class="wizard" id="carrier-application" name="carrier-application" method="POST" data-netlify="true" enctype="multipart/form-data" netlify-honeypot="bot-field" data-form="carrier" data-wizard novalidate aria-label="Carrier onboarding application">
+          <input type="hidden" name="form-name" value="carrier-application">
+          <p class="hp"><label>Do not fill this out<input name="bot-field"></label></p>
+
+          <div class="wizard__head">
+            <ol class="wizard__steps" style="list-style:none;padding:0;margin:0">
+              <li class="wstep is-current" data-wstep><span class="wstep__dot">1</span><span class="wstep__label">Operation</span></li>
+              <li class="wstep__line" aria-hidden="true"></li>
+              <li class="wstep" data-wstep><span class="wstep__dot">2</span><span class="wstep__label">Authority</span></li>
+              <li class="wstep__line" aria-hidden="true"></li>
+              <li class="wstep" data-wstep><span class="wstep__dot">3</span><span class="wstep__label">Documents</span></li>
+              <li class="wstep__line" aria-hidden="true"></li>
+              <li class="wstep" data-wstep><span class="wstep__dot">4</span><span class="wstep__label">Sign</span></li>
+            </ol>
+          </div>
+          <div class="wizard__progress"><span></span></div>
+
+          <div class="wizard__body">
+            <div class="wpanel is-active" data-wpanel>
+              <h2>Tell us about your operation.</h2>
+              <p class="wizard__lead">Use the legal name tied to your authority. This is the information brokers will see on your setup packets.</p>
+
+              <div class="form">
+                <div class="field">
+                  <label for="company">Company legal name <span class="req">*</span></label>
+                  <input id="company" name="company" type="text" autocomplete="organization" required placeholder="Example Trucking LLC">
+                  <span class="field__error"></span>
+                </div>
+                <div class="form__row">
+                  <div class="field">
+                    <label for="mc">MC number <span class="req">*</span></label>
+                    <input id="mc" name="mc" type="text" inputmode="numeric" required placeholder="MC 1234567">
+                    <span class="field__error"></span>
+                  </div>
+                  <div class="field">
+                    <label for="dot">DOT number <span class="req">*</span></label>
+                    <input id="dot" name="dot" type="text" inputmode="numeric" required placeholder="DOT 1234567">
+                    <span class="field__error"></span>
+                  </div>
+                </div>
+                <div class="form__row">
+                  <div class="field">
+                    <label for="contact-name">Contact name <span class="req">*</span></label>
+                    <input id="contact-name" name="contact-name" type="text" autocomplete="name" required placeholder="Full name">
+                    <span class="field__error"></span>
+                  </div>
+                  <div class="field">
+                    <label for="phone">Phone <span class="req">*</span></label>
+                    <input id="phone" name="phone" type="tel" autocomplete="tel" required placeholder="(404) 555-0123">
+                    <span class="field__error"></span>
+                  </div>
+                </div>
+                <div class="field">
+                  <label for="email">Email <span class="req">*</span></label>
+                  <input id="email" name="email" type="email" autocomplete="email" required placeholder="you@company.com">
+                  <span class="field__error"></span>
+                </div>
+                <div class="form__row">
+                  <div class="field">
+                    <label for="equipment">Primary equipment <span class="req">*</span></label>
+                    <select id="equipment" name="equipment" required>
+                      <option value="">Select trailer type</option>
+                      <option>Dry van</option>
+                      <option>Reefer</option>
+                      <option>Flatbed</option>
+                      <option>Mixed fleet</option>
+                      <option>Power only</option>
+                    </select>
+                    <span class="field__error"></span>
+                  </div>
+                  <div class="field">
+                    <label for="trucks">Truck count <span class="req">*</span></label>
+                    <select id="trucks" name="trucks" required>
+                      <option value="">Select fleet size</option>
+                      <option>1 truck</option>
+                      <option>2 to 3 trucks</option>
+                      <option>4 to 10 trucks</option>
+                    </select>
+                    <span class="field__error"></span>
+                  </div>
+                </div>
+                <div class="field">
+                  <label for="home-base">Home base</label>
+                  <input id="home-base" name="home-base" type="text" placeholder="City, State" autocomplete="address-level2">
+                  <span class="field__hint">The city you prefer to start and end your week.</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="wpanel" data-wpanel>
+              <h2>Authority and insurance.</h2>
+              <p class="wizard__lead">This tells us what brokers will require before they put your truck on a load. We verify everything after you submit.</p>
+
+              <div class="form">
+                <div class="field">
+                  <label for="authority-age">MC authority age <span class="req">*</span></label>
+                  <select id="authority-age" name="authority-age" required>
+                    <option value="">Select authority age</option>
+                    <option>Less than 6 months</option>
+                    <option>6 to 12 months</option>
+                    <option>1 to 3 years</option>
+                    <option>3 years or more</option>
+                  </select>
+                  <span class="field__error"></span>
+                </div>
+                <div class="field">
+                  <label for="insurance-carrier">Insurance carrier <span class="req">*</span></label>
+                  <input id="insurance-carrier" name="insurance-carrier" type="text" required placeholder="Company name">
+                  <span class="field__error"></span>
+                </div>
+                <div class="form__row">
+                  <div class="field">
+                    <label for="auto-liability">Auto liability limit <span class="req">*</span></label>
+                    <select id="auto-liability" name="auto-liability" required>
+                      <option value="">Select limit</option>
+                      <option>$750,000</option>
+                      <option>$1,000,000</option>
+                      <option>$2,000,000 or more</option>
+                    </select>
+                    <span class="field__error"></span>
+                  </div>
+                  <div class="field">
+                    <label for="cargo">Cargo coverage <span class="req">*</span></label>
+                    <select id="cargo" name="cargo" required>
+                      <option value="">Select coverage</option>
+                      <option>$100,000</option>
+                      <option>$250,000 or more</option>
+                      <option>Not sure</option>
+                    </select>
+                    <span class="field__error"></span>
+                  </div>
+                </div>
+                <div class="field">
+                  <label for="policy-expiry">Policy expiration <span class="req">*</span></label>
+                  <input id="policy-expiry" name="policy-expiry" type="date" required>
+                  <span class="field__error"></span>
+                </div>
+                <div class="field">
+                  <label for="authority-notes">Notes for the dispatch team</label>
+                  <textarea id="authority-notes" name="authority-notes" rows="3" placeholder="Preferred lanes, trailer specs, anything we should know"></textarea>
+                </div>
+              </div>
+            </div>
+
+            <div class="wpanel" data-wpanel>
+              <h2>Upload your documents.</h2>
+              <p class="wizard__lead">PDF, JPG, or PNG up to 10 MB each. If a document is not handy, submit without it and we will follow up on your verification call.</p>
+
+              <div class="form">
+                <div class="field">
+                  <label for="doc-mc">MC authority letter</label>
+                  <div class="upload">
+                    <input id="doc-mc" name="mc-letter" type="file" accept=".pdf,.jpg,.jpeg,.png">
+                    <div class="upload__inner">
+                      <span class="upload__icon"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M10 13V3M6 7l4-4 4 4"/><path d="M3 13v3a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-3"/></svg></span>
+                      <span class="upload__text"><b>Choose a file or drag it here</b><span>PDF, JPG, or PNG · 10 MB max</span></span>
+                    </div>
+                    <span class="upload__file"></span>
+                  </div>
+                </div>
+                <div class="field">
+                  <label for="doc-insurance">Certificate of insurance</label>
+                  <div class="upload">
+                    <input id="doc-insurance" name="certificate-of-insurance" type="file" accept=".pdf,.jpg,.jpeg,.png">
+                    <div class="upload__inner">
+                      <span class="upload__icon"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M10 13V3M6 7l4-4 4 4"/><path d="M3 13v3a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-3"/></svg></span>
+                      <span class="upload__text"><b>Choose a file or drag it here</b><span>Auto liability and cargo coverage</span></span>
+                    </div>
+                    <span class="upload__file"></span>
+                  </div>
+                </div>
+                <div class="field">
+                  <label for="doc-w9">Completed W-9</label>
+                  <div class="upload">
+                    <input id="doc-w9" name="w9" type="file" accept=".pdf,.jpg,.jpeg,.png">
+                    <div class="upload__inner">
+                      <span class="upload__icon"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M10 13V3M6 7l4-4 4 4"/><path d="M3 13v3a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-3"/></svg></span>
+                      <span class="upload__text"><b>Choose a file or drag it here</b><span>Signed and dated</span></span>
+                    </div>
+                    <span class="upload__file"></span>
+                  </div>
+                </div>
+                <p class="form__note">
+                  <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M4 9V6a6 6 0 0 1 12 0v3M3 9h14v9H3z"/></svg>
+                  Documents are used for carrier verification and broker setup. They are not shared outside our dispatch and accounting process.
+                </p>
+              </div>
+            </div>
+
+            <div class="wpanel" data-wpanel>
+              <h2>Review and sign.</h2>
+              <p class="wizard__lead">Check the details below. Signing here authorizes 3T Dispatch Services to dispatch freight under your authority under the terms we review together.</p>
+
+              <dl class="review-list" aria-label="Application summary">
+                <div><dt>Company</dt><dd id="sum-company">Not provided</dd></div>
+                <div><dt>MC number</dt><dd id="sum-mc">Not provided</dd></div>
+                <div><dt>Contact</dt><dd id="sum-contact">Not provided</dd></div>
+                <div><dt>Phone</dt><dd id="sum-phone">Not provided</dd></div>
+                <div><dt>Email</dt><dd id="sum-email">Not provided</dd></div>
+                <div><dt>Equipment</dt><dd id="sum-equipment">Not provided</dd></div>
+                <div><dt>Fleet size</dt><dd id="sum-trucks">Not provided</dd></div>
+                <div><dt>Documents</dt><dd id="sum-docs">No files selected</dd></div>
+              </dl>
+
+              <div class="form" style="margin-top:1.5rem">
+                <div class="field">
+                  <label for="signer-name">Signer full name <span class="req">*</span></label>
+                  <input id="signer-name" name="signer-name" type="text" autocomplete="name" required placeholder="Full legal name">
+                  <span class="field__error"></span>
+                </div>
+                <div class="field">
+                  <label for="signer-title">Title</label>
+                  <input id="signer-title" name="signer-title" type="text" placeholder="Owner, President, Authorized agent">
+                </div>
+                <div class="field">
+                  <label>Signature <span class="req">*</span></label>
+                  <div class="sig-wrap">
+                    <canvas class="sig-canvas" id="signature-pad" aria-label="Draw your signature"></canvas>
+                    <div class="sig-foot">
+                      <span>Sign with your mouse, finger, or stylus</span>
+                      <button class="sig-clear" type="button">Clear signature</button>
+                    </div>
+                  </div>
+                  <input type="hidden" name="signature" value="">
+                  <span class="field__hint">Your drawn signature is attached to this application as an electronic record.</span>
+                </div>
+                <div class="field">
+                  <label for="typed-signature">Or type your signature</label>
+                  <input id="typed-signature" name="typed-signature" type="text" autocomplete="off" placeholder="Type your full name">
+                  <span class="field__hint">If drawing is not possible, a typed signature has the same effect on this application.</span>
+                </div>
+                <div class="consent">
+                  <input id="accuracy" name="accuracy" type="checkbox" required>
+                  <label for="accuracy">I confirm the information in this application is accurate and that I am authorized to sign on behalf of this carrier. <span class="req">*</span>
+                    <span class="field__error"></span>
+                  </label>
+                </div>
+                <div class="consent">
+                  <input id="agreement" name="agreement" type="checkbox" required>
+                  <label for="agreement">I have reviewed the dispatch agreement and authorize 3T Dispatch Services to book freight under my authority. <span class="req">*</span>
+                    <span class="field__error"></span>
+                  </label>
+                </div>
+                <p class="form__note">
+                  <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M10 2 3 5v5c0 4.4 3.2 7.4 7 8 3.8-.6 7-3.6 7-8V5l-7-3Z"/></svg>
+                  Signing does not lock you into exclusivity. It confirms the operating terms we review on your verification call.
+                </p>
+                <div class="form__status" role="status" aria-live="polite"></div>
+              </div>
+            </div>
+          </div>
+
+          <div class="wizard__foot">
+            <button class="btn btn--ghost" type="button" data-wizard-back style="visibility:hidden">Back</button>
+            <div style="display:flex;align-items:center;gap:1rem;flex-wrap:wrap">
+              <span class="small">Step <span data-step-now>1</span> of 4 · About 5 minutes</span>
+              <button class="btn" type="button" data-wizard-next>Continue</button>
+              <button class="btn" type="submit" data-wizard-submit hidden>Submit application</button>
+            </div>
+          </div>
+        </form>
+      </div>
+
+      <aside class="apply-aside" aria-label="Carrier requirements and onboarding help">
+        <div class="aside-card">
+          <h3>Minimum requirements</h3>
+          <ul class="doc-list" style="border-top:0">
+            <li><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><path d="m4 10 4 4 8-9"/></svg>Active MC and DOT authority</li>
+            <li><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><path d="m4 10 4 4 8-9"/></svg>Auto liability and cargo insurance</li>
+            <li><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><path d="m4 10 4 4 8-9"/></svg>One year of authority preferred</li>
+            <li><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><path d="m4 10 4 4 8-9"/></svg>Dry van, reefer, or flatbed equipment</li>
+            <li><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><path d="m4 10 4 4 8-9"/></svg>Clean DOT safety profile</li>
+          </ul>
+        </div>
+        <div class="aside-card">
+          <h3>Documents to upload</h3>
+          <ul class="doc-list" style="border-top:0">
+            <li><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><path d="M11 2H5a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8Z"/><path d="M11 2v6h6"/></svg>MC authority letter<span>Required</span></li>
+            <li><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><path d="M11 2H5a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8Z"/><path d="M11 2v6h6"/></svg>Certificate of insurance<span>Required</span></li>
+            <li><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><path d="M11 2H5a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8Z"/><path d="M11 2v6h6"/></svg>Completed W-9<span>Required</span></li>
+            <li><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><path d="M11 2H5a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8Z"/><path d="M11 2v6h6"/></svg>Dispatch agreement<span>E-signed</span></li>
+          </ul>
+          <p class="small muted" style="margin-top:.85rem;margin-bottom:0">PDF, JPG, or PNG up to 10 MB.</p>
+        </div>
+        <div class="aside-card aside-card--dark">
+          <h3>What happens next</h3>
+          <ol style="list-style:none;padding:0;margin:0;display:grid;gap:0.85rem">
+            <li style="display:grid;grid-template-columns:auto 1fr;gap:0.65rem;padding:0">
+              <span style="font-family:var(--font-cond);color:var(--blue-300);font-size:0.75rem;padding-top:0.1rem">01</span>
+              <span>We review your authority, insurance, and documents.</span>
+            </li>
+            <li style="display:grid;grid-template-columns:auto 1fr;gap:0.65rem;padding:0">
+              <span style="font-family:var(--font-cond);color:var(--blue-300);font-size:0.75rem;padding-top:0.1rem">02</span>
+              <span>A dispatcher calls to confirm your equipment and lanes.</span>
+            </li>
+            <li style="display:grid;grid-template-columns:auto 1fr;gap:0.65rem;padding:0">
+              <span style="font-family:var(--font-cond);color:var(--blue-300);font-size:0.75rem;padding-top:0.1rem">03</span>
+              <span>We build your lane plan and send broker packets.</span>
+            </li>
+            <li style="display:grid;grid-template-columns:auto 1fr;gap:0.65rem;padding:0">
+              <span style="font-family:var(--font-cond);color:var(--blue-300);font-size:0.75rem;padding-top:0.1rem">04</span>
+              <span>Your first load is offered with full detail. You approve the rate.</span>
+            </li>
+          </ol>
+        </div>
+        <div class="aside-card">
+          <h3>Need help with the form?</h3>
+          <p>Call the desk during business hours and we will walk through it with you.</p>
+          <p style="margin-bottom:0"><a href="tel:+14044290224">404-429-0224</a><br><a href="mailto:3tdispatchservices@gmail.com">3tdispatchservices@gmail.com</a></p>
+        </div>
+      </aside>
+    </div>
+  </div>
+</section>
+
+<section class="section" aria-labelledby="carrier-faq-title">
+  <div class="container faq-layout">
+    <div class="faq-layout__intro reveal">
+      <p class="eyebrow">Carrier questions</p>
+      <h2 id="carrier-faq-title">Answers before you apply.</h2>
+      <p class="lead" style="margin-top:1rem">Still unsure whether your authority or equipment fits? Call the desk. We will tell you directly.</p>
+      <p style="margin-top:1.5rem"><a class="link-arrow" href="tel:+14044290224">Call 404-429-0224</a></p>
+    </div>
+    <div class="faq reveal reveal-delay-1" style="border-top:1px solid var(--line)">
+      <div class="faq__item">
+        <button class="faq__q" type="button" aria-expanded="true" aria-controls="car-faq-1">Do I need my own MC authority?<span class="faq__icon" aria-hidden="true"></span></button>
+        <div class="faq__a" id="car-faq-1" role="region"><div>Yes. You must hold active MC and DOT authority and carry active insurance. We do not dispatch company drivers or trucks operating under someone else's authority.</div></div>
+      </div>
+      <div class="faq__item">
+        <button class="faq__q" type="button" aria-expanded="false" aria-controls="car-faq-2">My MC is newer than one year. Can I still apply?<span class="faq__icon" aria-hidden="true"></span></button>
+        <div class="faq__a" id="car-faq-2" role="region"><div>Yes, apply. We prefer one year of aged authority because broker setup is smoother, but newer authorities are reviewed case by case based on equipment, insurance, safety profile, and the lanes available.</div></div>
+      </div>
+      <div class="faq__item">
+        <button class="faq__q" type="button" aria-expanded="false" aria-controls="car-faq-3">How long does onboarding take?<span class="faq__icon" aria-hidden="true"></span></button>
+        <div class="faq__a" id="car-faq-3" role="region"><div>Most of the work happens in one call. Once your authority, insurance, W-9, and signed agreement are on file, we build your lane plan and begin sourcing freight. Timing depends on how quickly documents are verified.</div></div>
+      </div>
+      <div class="faq__item">
+        <button class="faq__q" type="button" aria-expanded="false" aria-controls="car-faq-4">Do I have to be exclusive to 3T?<span class="faq__icon" aria-hidden="true"></span></button>
+        <div class="faq__a" id="car-faq-4" role="region"><div>No. You keep your authority and your business. We ask for clear communication about availability so we do not book you against freight you cannot cover.</div></div>
+      </div>
+      <div class="faq__item">
+        <button class="faq__q" type="button" aria-expanded="false" aria-controls="car-faq-5">Can I run my own trailers and my own brokers?<span class="faq__icon" aria-hidden="true"></span></button>
+        <div class="faq__a" id="car-faq-5" role="region"><div>Yes. You own your equipment and your relationships. We can work alongside brokers you already trust and focus on filling the gaps in your week.</div></div>
+      </div>
+    </div>
+  </div>
+</section>
