@@ -104,9 +104,11 @@ function quoteForm(root, variant = "") {
   return `<div class="quote-panel">
       <h3${variant === "band" ? ' id="cta-form-title"' : ""}>Request a dispatch call</h3>
       <p>Tell us what you run. We will call to discuss your lanes, your equipment, and how dispatch would work for your operation.</p>
-      <form class="form" name="dispatch-request" method="POST" novalidate data-netlify="true" netlify-honeypot="bot-field" data-form="quote" aria-label="Request a dispatch call">
-        <input type="hidden" name="form-name" value="dispatch-request">
-        <p class="hp"><label>Do not fill this out<input name="bot-field"></label></p>
+      <form class="form" name="dispatch-request" method="POST" action="https://formsubmit.co/3tdispatchservices@gmail.com" novalidate enctype="multipart/form-data" data-form="quote" aria-label="Request a dispatch call">
+        <input type="hidden" name="_subject" value="Dispatch request: 3T Dispatch Services">
+        <input type="hidden" name="_template" value="table">
+        <input type="hidden" name="_captcha" value="false">
+        <p class="hp"><label>Do not fill this out<input name="_honey"></label></p>
         <div class="field">
           <label for="${id}-name">Name <span class="req">*</span></label>
           <input id="${id}-name" name="name" type="text" autocomplete="name" required placeholder="Your name">

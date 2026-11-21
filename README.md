@@ -42,33 +42,33 @@ Coverage, Reviews, FAQ). A scroll spy highlights the section currently in view.
 
 ## Forms and deployment (important)
 
-Forms are wired for **Netlify Forms** with `data-netlify="true"` and a hidden
-`form-name`. Deploy to Netlify (drag the folder into Netlify Drop or connect the
-repo) and submissions appear under **Forms** in the dashboard. File uploads work
-on the carrier application because the form is multipart.
+Forms submit to **FormSubmit** (`https://formsubmit.co/ajax/3tdispatchservices@gmail.com`),
+which emails each submission straight to that inbox. It needs no account and no
+server, so the forms work on any static host (Netlify, Vercel, GitHub Pages,
+cPanel, plain file hosting). Each form also has a native `action` pointing at
+FormSubmit as a no-JavaScript fallback.
 
 Form names in use: `dispatch-request-main`, `dispatch-request` (shared CTA form),
 `carrier-application`.
 
-### Send submissions to 3tdispatchservices@gmail.com
+### One-time activation (required)
 
-Netlify stores the submissions, but email delivery is a per-site setting, so it
-must be switched on once in the dashboard:
+The first submission to a new address makes FormSubmit send an **activation
+email** to `3tdispatchservices@gmail.com`. Until its "Activate Form" link is
+clicked, submissions are not delivered and the form shows the fallback error.
+Activation is per email address, so it only has to be done once.
 
-1. Deploy the site, then open the Netlify dashboard for the site.
-2. Go to **Forms** → select each of the three forms → **Settings and usage** →
-   **Form notifications** → **Add notification** → **Email notification**.
-3. Set the email address to `3tdispatchservices@gmail.com` and save.
+After activating, submissions arrive by email with all fields. The carrier
+application attaches the uploaded documents and the drawn signature as files.
 
-Submissions then arrive by email with all fields; the carrier application also
-attaches the uploaded documents and the drawn signature (PNG) once the site is
-live. A submission made from `localhost` is never sent, by design.
+In local development (`localhost`, `127.0.0.1`, or `file://`) the submit handler
+skips the network request and shows the success state, so nothing is sent while
+previewing. To send while testing on a LAN IP or a deploy preview, submit from
+the real domain, or temporarily remove the local-preview check.
 
-On other hosts (Vercel, plain static hosting), Netlify Forms will not run. Point
-`submitToNetlify()` in `assets/js/main.js` at your handler (Formspree, Basin, a
-serverless function) or use its mailto fallback. Success and error states are
-already built. In local development the submit handler skips the network request
-and shows the success state so you can review the flow; nothing is sent locally.
+The endpoint and address live in `FORM_ENDPOINT` in `assets/js/main.js` and in
+the `action` attributes (`_src/pages/*.html` and `quoteForm()` in `build.mjs`).
+Rebuild with `node build.mjs` after changing them.
 
 ## Before launch
 

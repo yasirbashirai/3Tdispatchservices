@@ -343,7 +343,7 @@
     var data = new FormData(form);
     var lines = [];
     data.forEach(function (value, key) {
-      if (typeof value === "string" && value && key !== "signature" && !key.startsWith("bot-field")) {
+      if (typeof value === "string" && value && key !== "signature" && key.charAt(0) !== "_") {
         lines.push(key.replace(/-/g, " ") + ": " + value);
       }
     });
@@ -351,19 +351,47 @@
       "&body=" + encodeURIComponent(lines.join("\n"));
   }
 
-  function submitToNetlify(form) {
+  var FORM_ENDPOINT = "https://formsubmit.co/ajax/3tdispatchservices@gmail.com";
+
+  function dataUrlToFile(dataUrl, name) {
+    var parts = dataUrl.split(",");
+    var mimeMatch = parts[0].match(/:(.*?);/);
+    var binary = atob(parts[1]);
+    var bytes = new Uint8Array(binary.length);
+    for (var i = 0; i < binary.length; i += 1) bytes[i] = binary.charCodeAt(i);
+    return new File([bytes], name, { type: mimeMatch ? mimeMatch[1] : "image/png" });
+  }
+
+  function submitForm(form, subject) {
     var formData = new FormData(form);
-    var isMultipart = form.getAttribute("enctype") === "multipart/form-data";
-    if (isMultipart) {
-      return fetch("/", { method: "POST", body: formData });
+    formData.delete("_honey");
+    formData.delete("bot-field");
+
+    var signature = formData.get("signature");
+    if (typeof signature === "string" && signature.indexOf("data:image") === 0) {
+      try {
+        formData.set("signature", dataUrlToFile(signature, "signature.png"));
+      } catch (err) {
+        formData.delete("signature");
+      }
     }
-    return fetch("/", {
+
+    formData.set("_subject", subject);
+    formData.set("_template", "table");
+    formData.set("_captcha", "false");
+
+    return fetch(FORM_ENDPOINT, {
       method: "POST",
-      headers: { "Content-Type": "application/x-www-form-urlencoded" },
-      body: new URLSearchParams(Array.from(formData.entries()).filter(function (pair) {
-        return typeof pair[1] === "string";
-      })).toString()
-    });
+      headers: { Accept: "application/json" },
+      body: formData
+    })
+      .then(function (res) { return res.json(); })
+      .then(function (json) {
+        if (!json || (json.success !== true && json.success !== "true")) {
+          throw new Error((json && json.message) || "Submission failed");
+        }
+        return json;
+      });
   }
 
   document.querySelectorAll("[data-form]").forEach(function (form) {
@@ -389,6 +417,7 @@
       }
 
       var isCarrier = form.getAttribute("data-form") === "carrier";
+      var subject = isCarrier ? "Carrier onboarding: 3T Dispatch Services" : "Dispatch request: 3T Dispatch Services";
       var successHtml = isCarrier
         ? "<strong>Application received.</strong> Thank you. A dispatcher will review your authority and documents, then contact you to discuss your operation. If you need to add documents, email 3tdispatchservices@gmail.com."
         : "<strong>Request received.</strong> We will call you within one business day to talk through your operation. For anything urgent, call 404-429-0224.";
@@ -431,8 +460,8 @@
         return;
       }
 
-      submitToNetlify(form)
-        .then(function (res) { finish(res.ok); })
+      submitForm(form, subject)
+        .then(function () { finish(true); })
         .catch(function () { finish(false); });
     });
   });
