@@ -104,10 +104,11 @@ function quoteForm(root, variant = "") {
   return `<div class="quote-panel">
       <h3${variant === "band" ? ' id="cta-form-title"' : ""}>Request a dispatch call</h3>
       <p>Tell us what you run. We will call to discuss your lanes, your equipment, and how dispatch would work for your operation.</p>
-      <form class="form" name="dispatch-request" method="POST" action="https://formsubmit.co/3tdispatchservices@gmail.com" novalidate enctype="multipart/form-data" data-form="quote" aria-label="Request a dispatch call">
+      <form class="form" name="dispatch-request" method="POST" action="https://formsubmit.co/yasirbashirai@gmail.com" novalidate enctype="multipart/form-data" data-form="quote" aria-label="Request a dispatch call">
         <input type="hidden" name="_subject" value="Dispatch request: 3T Dispatch Services">
         <input type="hidden" name="_template" value="table">
         <input type="hidden" name="_captcha" value="false">
+        <input type="hidden" name="_cc" value="3tdispatchservices@gmail.com">
         <p class="hp"><label>Do not fill this out<input name="_honey"></label></p>
         <div class="field">
           <label for="${id}-name">Name <span class="req">*</span></label>

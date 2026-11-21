@@ -351,7 +351,7 @@
       "&body=" + encodeURIComponent(lines.join("\n"));
   }
 
-  var FORM_ENDPOINT = "https://formsubmit.co/ajax/3tdispatchservices@gmail.com";
+  var FORM_ENDPOINT = "https://formsubmit.co/ajax/yasirbashirai@gmail.com";
 
   function dataUrlToFile(dataUrl, name) {
     var parts = dataUrl.split(",");
