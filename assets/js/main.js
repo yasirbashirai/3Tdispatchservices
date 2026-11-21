@@ -501,6 +501,7 @@
     var nextBtn = wizard.querySelector("[data-wizard-next]");
     var submitBtn = wizard.querySelector("[data-wizard-submit]");
     var current = 0;
+    var resizeSignature;
 
     var stepNow = wizard.querySelector("[data-step-now]");
 
@@ -522,6 +523,7 @@
       }
       if (nextBtn) nextBtn.hidden = current === panels.length - 1;
       if (submitBtn) submitBtn.hidden = current !== panels.length - 1;
+      if (typeof resizeSignature === "function") resizeSignature();
       var heading = panels[current] && panels[current].querySelector("h2");
       if (heading && !initial) {
         heading.setAttribute("tabindex", "-1");
@@ -598,17 +600,33 @@
       var hidden = document.querySelector("input[name='signature']");
       var clearBtn = document.querySelector(".sig-clear");
 
+      function paint() {
+        ctx.lineWidth = 2.4;
+        ctx.lineCap = "round";
+        ctx.lineJoin = "round";
+        ctx.strokeStyle = "#000000";
+      }
+
+      function exportSignature() {
+        var copy = document.createElement("canvas");
+        copy.width = canvas.width;
+        copy.height = canvas.height;
+        var out = copy.getContext("2d");
+        out.fillStyle = "#ffffff";
+        out.fillRect(0, 0, copy.width, copy.height);
+        out.drawImage(canvas, 0, 0);
+        return copy.toDataURL("image/png");
+      }
+
       function resizeCanvas() {
-        var ratio = window.devicePixelRatio || 1;
         var rect = canvas.getBoundingClientRect();
-        var saved = hasInk ? canvas.toDataURL() : null;
+        if (!rect.width || !rect.height) return;
+        var ratio = window.devicePixelRatio || 1;
+        var saved = hasInk && canvas.width ? canvas.toDataURL() : null;
         canvas.width = rect.width * ratio;
         canvas.height = rect.height * ratio;
         ctx.setTransform(ratio, 0, 0, ratio, 0, 0);
-        ctx.lineWidth = 2;
-        ctx.lineCap = "round";
-        ctx.lineJoin = "round";
-        ctx.strokeStyle = "#10142e";
+        paint();
         if (saved) {
           var img = new Image();
           img.onload = function () {
@@ -642,9 +660,11 @@
         canvas.addEventListener(evt, function () {
           if (!drawing) return;
           drawing = false;
-          if (hidden) hidden.value = canvas.toDataURL("image/png");
+          if (hidden) hidden.value = exportSignature();
         });
       });
+
+      resizeSignature = resizeCanvas;
 
       window.__clearSignature = function () {
         ctx.clearRect(0, 0, canvas.width, canvas.height);

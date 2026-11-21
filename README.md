@@ -50,6 +50,20 @@ on the carrier application because the form is multipart.
 Form names in use: `dispatch-request-main`, `dispatch-request` (shared CTA form),
 `carrier-application`.
 
+### Send submissions to 3tdispatchservices@gmail.com
+
+Netlify stores the submissions, but email delivery is a per-site setting, so it
+must be switched on once in the dashboard:
+
+1. Deploy the site, then open the Netlify dashboard for the site.
+2. Go to **Forms** → select each of the three forms → **Settings and usage** →
+   **Form notifications** → **Add notification** → **Email notification**.
+3. Set the email address to `3tdispatchservices@gmail.com` and save.
+
+Submissions then arrive by email with all fields; the carrier application also
+attaches the uploaded documents and the drawn signature (PNG) once the site is
+live. A submission made from `localhost` is never sent, by design.
+
 On other hosts (Vercel, plain static hosting), Netlify Forms will not run. Point
 `submitToNetlify()` in `assets/js/main.js` at your handler (Formspree, Basin, a
 serverless function) or use its mailto fallback. Success and error states are
