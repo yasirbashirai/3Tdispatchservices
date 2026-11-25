@@ -461,7 +461,7 @@
       var successHtml = "<strong>Request received.</strong> We will call you within one business day to talk through your operation. For anything urgent, call 404-429-0224.";
       if (submitBtn) submitBtn.disabled = true;
 
-      var finish = function (ok) {
+      var finish = function (ok, reason) {
         if (submitBtn) {
           submitBtn.disabled = false;
           submitBtn.innerHTML = original;
@@ -483,12 +483,22 @@
             "",
             "We could not send this automatically. Email your details to <a href=\"" + mail + "\">3tdispatchservices@gmail.com</a> or call <a href=\"tel:+14044290224\">404-429-0224</a>."
           );
+          if (reason) {
+            var statusEl = form.querySelector(".form__status");
+            if (statusEl) {
+              var note = document.createElement("span");
+              note.className = "form__status-note";
+              note.textContent = "Server said: " + reason;
+              statusEl.appendChild(document.createElement("br"));
+              statusEl.appendChild(note);
+            }
+          }
         }
       };
 
       submitForm(form, subject)
         .then(function () { finish(true); })
-        .catch(function () { finish(false); });
+        .catch(function (err) { finish(false, err && err.message); });
     });
   });
 
