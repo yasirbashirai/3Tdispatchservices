@@ -338,20 +338,6 @@
     status.innerHTML = html || message;
   }
 
-  function mailtoFallback(form, subject) {
-    var data = new FormData(form);
-    var lines = [];
-    data.forEach(function (value, key) {
-      if (typeof value === "string" && value && key !== "signature" && key.charAt(0) !== "_") {
-        lines.push(key.replace(/-/g, " ") + ": " + value);
-      }
-    });
-    return "mailto:3tdispatchservices@gmail.com?subject=" + encodeURIComponent(subject) +
-      "&body=" + encodeURIComponent(lines.join("\n"));
-  }
-
-  var FORM_ENDPOINT = "https://formsubmit.co/ajax/3tdispatchservices@gmail.com";
-
   function setThanksRedirect(form) {
     var next = form.querySelector("input[name='_next']");
     if (!next) {
@@ -386,8 +372,10 @@
     }
   }
 
-  function finishCarrier(form, submitBtn, original) {
-    var successHtml = "<strong>Application received.</strong> Thank you. A dispatcher will review your authority and documents, then contact you to discuss your operation. If you need to add documents, email 3tdispatchservices@gmail.com.";
+  function finishSubmission(form, isCarrier, submitBtn, original) {
+    var successHtml = isCarrier
+      ? "<strong>Application received.</strong> Thank you. A dispatcher will review your authority and documents, then contact you to discuss your operation. If you need to add documents, email 3tdispatchservices@gmail.com."
+      : "<strong>Request received.</strong> We will call you within one business day to talk through your operation. For anything urgent, call 404-429-0224.";
     setStatus(form, "ok", "", successHtml);
     Array.prototype.forEach.call(form.querySelectorAll("input[data-generated]"), function (input) {
       input.parentNode.removeChild(input);
@@ -425,38 +413,6 @@
     return new File([bytes], name, { type: mimeMatch ? mimeMatch[1] : "image/png" });
   }
 
-  function submitForm(form, subject) {
-    var formData = new FormData(form);
-    formData.delete("_honey");
-    formData.delete("bot-field");
-
-    var signature = formData.get("signature");
-    if (typeof signature === "string" && signature.indexOf("data:image") === 0) {
-      try {
-        formData.set("signature", dataUrlToFile(signature, "signature.png"));
-      } catch (err) {
-        formData.delete("signature");
-      }
-    }
-
-    formData.set("_subject", subject);
-    formData.set("_template", "table");
-    formData.set("_captcha", "false");
-
-    return fetch(FORM_ENDPOINT, {
-      method: "POST",
-      headers: { Accept: "application/json" },
-      body: formData
-    })
-      .then(function (res) { return res.json(); })
-      .then(function (json) {
-        if (!json || (json.success !== true && json.success !== "true")) {
-          throw new Error((json && json.message) || "Submission failed");
-        }
-        return json;
-      });
-  }
-
   document.querySelectorAll("[data-form]").forEach(function (form) {
     form.addEventListener("submit", function (e) {
       if (!validateScope(form)) {
@@ -479,64 +435,22 @@
       var original = submitBtn ? submitBtn.innerHTML : "";
       if (submitBtn) submitBtn.innerHTML = "Sending…";
 
-      /* Carrier applications post natively into a hidden iframe so the uploaded
-         documents and drawn signature are delivered as attachments while the
-         page stays put and shows an inline thank-you. */
-      if (isCarrier) {
-        prepareSignatureFile(form);
-        var sink = document.getElementById("form-sink");
-        if (sink) {
-          form.target = "form-sink";
-          window.setTimeout(function () { finishCarrier(form, submitBtn, original); }, 300);
-        } else {
-          setThanksRedirect(form);
-        }
+      if (isCarrier) prepareSignatureFile(form);
+
+      /* Submit into a hidden iframe so the page stays put and shows an inline
+         thank-you while FormSubmit still receives every field and attachment. */
+      var sink = document.getElementById("form-sink");
+      if (!sink) {
+        setThanksRedirect(form);
         return;
       }
 
       e.preventDefault();
-      var subject = "Dispatch request: 3T Dispatch Services";
-      var successHtml = "<strong>Request received.</strong> We will call you within one business day to talk through your operation. For anything urgent, call 404-429-0224.";
-      if (submitBtn) submitBtn.disabled = true;
-
-      var finish = function (ok, reason) {
-        if (submitBtn) {
-          submitBtn.disabled = false;
-          submitBtn.innerHTML = original;
-        }
-        if (ok) {
-          setStatus(form, "ok", "", successHtml);
-          form.reset();
-          var status = form.querySelector(".form__status");
-          if (status) {
-            status.setAttribute("tabindex", "-1");
-            status.focus({ preventScroll: true });
-            status.scrollIntoView({ behavior: reduceMotion ? "auto" : "smooth", block: "center" });
-          }
-        } else {
-          var mail = mailtoFallback(form, subject);
-          setStatus(
-            form,
-            "error",
-            "",
-            "We could not send this automatically. Email your details to <a href=\"" + mail + "\">3tdispatchservices@gmail.com</a> or call <a href=\"tel:+14044290224\">404-429-0224</a>."
-          );
-          if (reason) {
-            var statusEl = form.querySelector(".form__status");
-            if (statusEl) {
-              var note = document.createElement("span");
-              note.className = "form__status-note";
-              note.textContent = "Server said: " + reason;
-              statusEl.appendChild(document.createElement("br"));
-              statusEl.appendChild(note);
-            }
-          }
-        }
-      };
-
-      submitForm(form, subject)
-        .then(function () { finish(true); })
-        .catch(function (err) { finish(false, err && err.message); });
+      form.target = "form-sink";
+      HTMLFormElement.prototype.submit.call(form);
+      window.setTimeout(function () {
+        finishSubmission(form, isCarrier, submitBtn, original);
+      }, 300);
     });
   });
 

@@ -47,12 +47,12 @@ Forms submit to **FormSubmit** at
 client inbox. It needs no account and no server, so the forms work on any static
 host (Netlify, Vercel, GitHub Pages, cPanel, plain file hosting).
 
-- The quote form (landing page and CTA band) submits with AJAX and shows an
-  inline confirmation.
-- The carrier application posts natively into a hidden iframe so FormSubmit
-  delivers the uploaded documents and the drawn signature as attachments while
-  the page shows an inline thank-you. `thanks.html` remains as the no-JavaScript
-  fallback via `_next`.
+- Both forms post natively into a hidden iframe (`#form-sink`, emitted by the
+  shared footer), so FormSubmit receives every field and attachment while the
+  page stays put and shows an inline thank-you.
+- The carrier application additionally attaches the uploaded documents and the
+  drawn signature. `thanks.html` remains as the no-JavaScript fallback via
+  `_next`.
 
 Form names in use: `dispatch-request-main`, `dispatch-request` (shared CTA form),
 `carrier-application`.

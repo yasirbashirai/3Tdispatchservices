@@ -228,6 +228,7 @@ function footer(root) {
       </div>
     </div>
   </footer>
+  <iframe id="form-sink" name="form-sink" title="Form submission" aria-hidden="true" tabindex="-1" style="display:none"></iframe>
   <script src="${root}assets/js/main.js" defer></script>`;
 }
 
