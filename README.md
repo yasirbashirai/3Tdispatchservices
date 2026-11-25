@@ -42,43 +42,41 @@ Coverage, Reviews, FAQ). A scroll spy highlights the section currently in view.
 
 ## Forms and deployment (important)
 
-Forms submit to **FormSubmit** (`https://formsubmit.co/ajax/yasirbashirai@gmail.com`)
-and CC `3tdispatchservices@gmail.com` on every submission, so the client receives
-all leads while the activation inbox stays with the developer. It needs no
-account and no server, so the forms work on any static host (Netlify, Vercel,
-GitHub Pages, cPanel, plain file hosting). Each form also has a native `action`
-pointing at FormSubmit as a no-JavaScript fallback.
+Forms submit to **FormSubmit** at
+`https://formsubmit.co/3tdispatchservices@gmail.com`, so every lead lands in the
+client inbox. It needs no account and no server, so the forms work on any static
+host (Netlify, Vercel, GitHub Pages, cPanel, plain file hosting).
+
+- The quote form (landing page and CTA band) submits with AJAX and shows an
+  inline confirmation.
+- The carrier application posts natively (full page) so FormSubmit delivers the
+  uploaded documents and the drawn signature as attachments, then redirects to
+  `thanks.html`.
 
 Form names in use: `dispatch-request-main`, `dispatch-request` (shared CTA form),
 `carrier-application`.
 
-### Delivery setup
+### Activation (required once)
 
-The primary address (`yasirbashirai@gmail.com`) is the one FormSubmit activates;
-the client address is copied through the `_cc` hidden field, which needs no
-activation. Once the primary address is activated, every submission reaches
-`3tdispatchservices@gmail.com` as a CC.
+FormSubmit only delivers mail after the destination address is activated. On the
+first submission it emails an **Activate Form** link to
+`3tdispatchservices@gmail.com`. Until someone clicks that link, every submission
+is rejected (`This form needs Activation`) and nothing is delivered. Check the
+inbox and spam folder, click the link once, and submissions start arriving.
 
-To hand delivery fully to the client later, change the endpoint/action to
-`https://formsubmit.co/ajax/3tdispatchservices@gmail.com` (and
-`https://formsubmit.co/3tdispatchservices@gmail.com`), drop the `_cc` fields, and
-have the client click the activation email FormSubmit sends them.
+To copy a second address, add a hidden `_cc` field; the primary address is the
+one that must be activated.
 
-The first submission to an unactivated primary address makes FormSubmit send an
-**activation email**. Until its "Activate Form" link is clicked, submissions are
-not delivered and the form shows the fallback error.
-
-After activating, submissions arrive by email with all fields. The carrier
+After activation, submissions arrive by email with all fields. The carrier
 application attaches the uploaded documents and the drawn signature as files.
 
-In local development (`localhost`, `127.0.0.1`, or `file://`) the submit handler
-skips the network request and shows the success state, so nothing is sent while
-previewing. To send while testing on a LAN IP or a deploy preview, submit from
-the real domain, or temporarily remove the local-preview check.
+Local development now submits for real, so you can test the live endpoint from
+`localhost`. To avoid sending during a design review, comment out the submit
+handler or temporarily point the action/endpoint at a test address.
 
-The endpoint and address live in `FORM_ENDPOINT` in `assets/js/main.js` and in
-the `action` attributes (`_src/pages/*.html` and `quoteForm()` in `build.mjs`).
-Rebuild with `node build.mjs` after changing them.
+The endpoint lives in `FORM_ENDPOINT` in `assets/js/main.js` and in the `action`
+attributes (`_src/pages/*.html` and `quoteForm()` in `build.mjs`). Rebuild with
+`node build.mjs` after changing them.
 
 ## Before launch
 

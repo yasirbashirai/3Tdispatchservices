@@ -3,7 +3,6 @@
   "use strict";
 
   var reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-  var isLocalPreview = /^(localhost|127\.0\.0\.1|\[::1\])$/.test(location.hostname) || location.protocol === "file:";
 
   /* ---------- Header shadow ---------- */
   var header = document.querySelector(".site-header");
@@ -351,7 +350,39 @@
       "&body=" + encodeURIComponent(lines.join("\n"));
   }
 
-  var FORM_ENDPOINT = "https://formsubmit.co/ajax/yasirbashirai@gmail.com";
+  var FORM_ENDPOINT = "https://formsubmit.co/ajax/3tdispatchservices@gmail.com";
+
+  function setThanksRedirect(form) {
+    var next = form.querySelector("input[name='_next']");
+    if (!next) {
+      next = document.createElement("input");
+      next.type = "hidden";
+      next.name = "_next";
+      form.appendChild(next);
+    }
+    if (location.protocol === "http:" || location.protocol === "https:") {
+      next.value = location.origin + "/thanks.html";
+    }
+  }
+
+  function prepareSignatureFile(form) {
+    var hidden = form.querySelector("input[name='signature']");
+    if (!hidden || hidden.type === "file") return;
+    if (typeof hidden.value !== "string" || hidden.value.indexOf("data:image") !== 0) return;
+    try {
+      var file = dataUrlToFile(hidden.value, "signature.png");
+      var transfer = new DataTransfer();
+      transfer.items.add(file);
+      var input = document.createElement("input");
+      input.type = "file";
+      input.name = "signature";
+      input.hidden = true;
+      input.files = transfer.files;
+      hidden.parentNode.replaceChild(input, hidden);
+    } catch (err) {
+      hidden.parentNode.removeChild(hidden);
+    }
+  }
 
   function dataUrlToFile(dataUrl, name) {
     var parts = dataUrl.split(",");
@@ -396,31 +427,39 @@
 
   document.querySelectorAll("[data-form]").forEach(function (form) {
     form.addEventListener("submit", function (e) {
-      e.preventDefault();
       if (!validateScope(form)) {
+        e.preventDefault();
         setStatus(form, "error", "Please check the highlighted fields and try again.");
         return;
       }
       var signatureInput = form.querySelector("input[name='signature']");
       var typedSignature = form.querySelector("input[name='typed-signature']");
       if (signatureInput && !signatureInput.value && !(typedSignature && typedSignature.value.trim())) {
+        e.preventDefault();
         setStatus(form, "error", "Please add a signature, drawn or typed, before submitting.");
         var pad = form.querySelector("#signature-pad");
         if (pad) pad.scrollIntoView({ behavior: reduceMotion ? "auto" : "smooth", block: "center" });
         return;
       }
-      var submitBtn = form.querySelector("[type='submit']");
-      var original = submitBtn ? submitBtn.innerHTML : "";
-      if (submitBtn) {
-        submitBtn.disabled = true;
-        submitBtn.innerHTML = "Sending…";
-      }
 
       var isCarrier = form.getAttribute("data-form") === "carrier";
-      var subject = isCarrier ? "Carrier onboarding: 3T Dispatch Services" : "Dispatch request: 3T Dispatch Services";
-      var successHtml = isCarrier
-        ? "<strong>Application received.</strong> Thank you. A dispatcher will review your authority and documents, then contact you to discuss your operation. If you need to add documents, email 3tdispatchservices@gmail.com."
-        : "<strong>Request received.</strong> We will call you within one business day to talk through your operation. For anything urgent, call 404-429-0224.";
+      var submitBtn = form.querySelector("[type='submit']");
+      var original = submitBtn ? submitBtn.innerHTML : "";
+      if (submitBtn) submitBtn.innerHTML = "Sending…";
+
+      /* Carrier applications post natively so FormSubmit delivers the uploaded
+         documents and the drawn signature as attachments, then redirects to
+         the thank-you page. */
+      if (isCarrier) {
+        setThanksRedirect(form);
+        prepareSignatureFile(form);
+        return;
+      }
+
+      e.preventDefault();
+      var subject = "Dispatch request: 3T Dispatch Services";
+      var successHtml = "<strong>Request received.</strong> We will call you within one business day to talk through your operation. For anything urgent, call 404-429-0224.";
+      if (submitBtn) submitBtn.disabled = true;
 
       var finish = function (ok) {
         if (submitBtn) {
@@ -430,14 +469,6 @@
         if (ok) {
           setStatus(form, "ok", "", successHtml);
           form.reset();
-          form.querySelectorAll(".upload").forEach(function (u) {
-            u.classList.remove("has-file");
-            var label = u.querySelector(".upload__file");
-            if (label) label.textContent = "";
-          });
-          var signature = form.querySelector("input[name='signature']");
-          if (signature) signature.value = "";
-          if (window.__clearSignature) window.__clearSignature();
           var status = form.querySelector(".form__status");
           if (status) {
             status.setAttribute("tabindex", "-1");
@@ -445,7 +476,7 @@
             status.scrollIntoView({ behavior: reduceMotion ? "auto" : "smooth", block: "center" });
           }
         } else {
-          var mail = mailtoFallback(form, isCarrier ? "Carrier onboarding: 3T Dispatch Services" : "Dispatch request: 3T Dispatch Services");
+          var mail = mailtoFallback(form, subject);
           setStatus(
             form,
             "error",
@@ -454,11 +485,6 @@
           );
         }
       };
-
-      if (isLocalPreview) {
-        setTimeout(function () { finish(true); }, 550);
-        return;
-      }
 
       submitForm(form, subject)
         .then(function () { finish(true); })
