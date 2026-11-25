@@ -377,10 +377,42 @@
       input.type = "file";
       input.name = "signature";
       input.hidden = true;
+      input.setAttribute("data-generated", "true");
       input.files = transfer.files;
-      hidden.parentNode.replaceChild(input, hidden);
+      hidden.disabled = true;
+      form.appendChild(input);
     } catch (err) {
-      hidden.parentNode.removeChild(hidden);
+      hidden.disabled = true;
+    }
+  }
+
+  function finishCarrier(form, submitBtn, original) {
+    var successHtml = "<strong>Application received.</strong> Thank you. A dispatcher will review your authority and documents, then contact you to discuss your operation. If you need to add documents, email 3tdispatchservices@gmail.com.";
+    setStatus(form, "ok", "", successHtml);
+    Array.prototype.forEach.call(form.querySelectorAll("input[data-generated]"), function (input) {
+      input.parentNode.removeChild(input);
+    });
+    form.querySelectorAll(".upload").forEach(function (u) {
+      u.classList.remove("has-file");
+      var label = u.querySelector(".upload__file");
+      if (label) label.textContent = "";
+    });
+    form.reset();
+    var signature = form.querySelector("input[name='signature']");
+    if (signature) {
+      signature.disabled = false;
+      signature.value = "";
+    }
+    if (window.__clearSignature) window.__clearSignature();
+    if (submitBtn) {
+      submitBtn.disabled = false;
+      submitBtn.innerHTML = original;
+    }
+    var status = form.querySelector(".form__status");
+    if (status) {
+      status.setAttribute("tabindex", "-1");
+      status.focus({ preventScroll: true });
+      status.scrollIntoView({ behavior: reduceMotion ? "auto" : "smooth", block: "center" });
     }
   }
 
@@ -447,12 +479,18 @@
       var original = submitBtn ? submitBtn.innerHTML : "";
       if (submitBtn) submitBtn.innerHTML = "Sending…";
 
-      /* Carrier applications post natively so FormSubmit delivers the uploaded
-         documents and the drawn signature as attachments, then redirects to
-         the thank-you page. */
+      /* Carrier applications post natively into a hidden iframe so the uploaded
+         documents and drawn signature are delivered as attachments while the
+         page stays put and shows an inline thank-you. */
       if (isCarrier) {
-        setThanksRedirect(form);
         prepareSignatureFile(form);
+        var sink = document.getElementById("form-sink");
+        if (sink) {
+          form.target = "form-sink";
+          window.setTimeout(function () { finishCarrier(form, submitBtn, original); }, 300);
+        } else {
+          setThanksRedirect(form);
+        }
         return;
       }
 
